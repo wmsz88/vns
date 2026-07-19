@@ -1,0 +1,10 @@
+<figure class="image-zoom" itemscope itemtype="http://schema.org/ImageObject">
+  <img
+    data-src="{{ .Destination | relURL | safeURL }}"
+    alt="{{ .Text }}"
+    src="{{ .Destination | relURL | safeURL }}"
+    data-zoomable
+    itemprop="contentUrl"
+  />
+  {{ with .Text }}<figcaption>{{ . }}</figcaption>{{ end }}
+</figure>

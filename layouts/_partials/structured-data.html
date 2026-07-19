@@ -1,0 +1,75 @@
+{{- if .IsHome -}}
+{{- $data := dict
+  "@context" "https://schema.org"
+  "@type" "WebSite"
+  "name" .Site.Title
+  "url" .Site.BaseURL
+  "description" .Site.Params.description
+  "inLanguage" "zh-CN"
+  "publisher" (dict
+    "@type" "Organization"
+    "name" .Site.Title
+    "logo" (dict "@type" "ImageObject" "url" (.Site.Params.ogImage | absURL))
+  )
+  "potentialAction" (dict
+    "@type" "SearchAction"
+    "target" (dict
+      "@type" "EntryPoint"
+      "urlTemplate" (printf "%ssearch/?q={search_term_string}" .Site.BaseURL)
+    )
+    "query-input" "required name=search_term_string"
+  )
+-}}
+{{ printf `<script type="application/ld+json">%s</script>` ($data | jsonify) | safeHTML }}
+{{- else if .IsPage -}}
+{{- $author := default .Site.Params.defaultAuthor .Params.author -}}
+{{- $desc := "" -}}
+{{- if .Description -}}{{- $desc = .Description | markdownify | plainify | htmlUnescape -}}
+{{- else -}}{{- $desc = .Summary | plainify | htmlUnescape -}}{{- end -}}
+{{- $desc = $desc | replaceRE `\s+` " " | strings.TrimSpace | truncate 300 -}}
+{{- $article := dict
+  "@context" "https://schema.org"
+  "@type" "Article"
+  "headline" .Title
+  "url" .Permalink
+  "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
+  "author" (dict "@type" "Person" "name" $author)
+  "publisher" (dict
+    "@type" "Organization"
+    "name" .Site.Title
+    "logo" (dict "@type" "ImageObject" "url" (.Site.Params.ogImage | absURL))
+  )
+  "description" $desc
+  "wordCount" (.Plain | htmlUnescape | strings.RuneCount)
+-}}
+{{- with .Params.cover -}}{{- $article = merge $article (dict "image" (slice (. | absURL))) -}}{{- end -}}
+{{- with .Date -}}{{- $article = merge $article (dict "datePublished" (.Format "2006-01-02T15:04:05-07:00")) -}}{{- end -}}
+{{- with .Lastmod -}}{{- $article = merge $article (dict "dateModified" (.Format "2006-01-02T15:04:05-07:00")) -}}{{- end -}}
+{{- with .Params.tags -}}{{- $article = merge $article (dict "keywords" .) -}}{{- end -}}
+{{ printf `<script type="application/ld+json">%s</script>` ($article | jsonify) | safeHTML }}
+{{- if eq $.Section "p" -}}
+{{- $breadcrumb := dict
+  "@context" "https://schema.org"
+  "@type" "BreadcrumbList"
+  "itemListElement" (slice
+    (dict "@type" "ListItem" "position" 1 "name" $.Site.Title "item" $.Site.BaseURL)
+    (dict "@type" "ListItem" "position" 2 "name" $.Title "item" $.Permalink)
+  )
+-}}
+{{ printf `<script type="application/ld+json">%s</script>` ($breadcrumb | jsonify) | safeHTML }}
+{{- $parts := split $.Title "／" -}}
+{{- $game := dict
+  "@context" "https://schema.org"
+  "@type" "VideoGame"
+  "name" (index $parts 0)
+  "url" $.Permalink
+  "description" $desc
+-}}
+{{- if gt (len $parts) 1 -}}{{- $game = merge $game (dict "alternateName" (after 1 $parts)) -}}{{- end -}}
+{{- with $.Params.cover -}}{{- $game = merge $game (dict "image" (. | absURL)) -}}{{- end -}}
+{{- with $.Params.tags -}}{{- $game = merge $game (dict "genre" .) -}}{{- end -}}
+{{- with $.Params.categories -}}{{- $game = merge $game (dict "gamePlatform" .) -}}{{- end -}}
+{{- with $.Params.years -}}{{- $game = merge $game (dict "datePublished" (index (sort .) 0)) -}}{{- end -}}
+{{ printf `<script type="application/ld+json">%s</script>` ($game | jsonify) | safeHTML }}
+{{- end -}}
+{{- end -}}

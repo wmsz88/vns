@@ -1,0 +1,32 @@
+<script>
+  const swup = new Swup({
+    containers: ["#swup", "header", "footer", "#hdrDrawer", ".page-qr"],
+    linkSelector: "a[href]:not([data-no-swup])",
+    plugins: [
+      new SwupParallelPlugin({ containers: ['#swup'] }),
+      new SwupPreloadPlugin(),
+      new SwupScrollPlugin(),
+      new SwupA11yPlugin(),
+      new SwupProgressPlugin(),
+      new SwupHeadPlugin({
+        persistAssets: true,
+        persistTags: 'link[rel="stylesheet"], script[src], style',
+      }),
+      new SwupBodyClassPlugin(),
+    ],
+  });
+</script>
+{{ partialCached "head/js.html" . }}
+<!-- 浮动操作按钮（汉堡菜单已移至顶栏 header.html 的 .hdr-burger，触发右侧栏） -->
+<!-- column-reverse 布局：DOM 中越靠前越靠下，jump-to-comments 落在最底部（右下角）。 -->
+<div class="floating-actions">
+  <button id="jump-to-comments" class="fab-btn" title="跳转到评论" aria-label="跳转到评论区">
+    <i class="fa fa-comment-dots" aria-hidden="true"></i>
+  </button>
+  <button id="back-to-top" class="fab-btn" title="返回顶部" aria-label="返回页面顶部">
+    <i class="fa fa-angles-up" aria-hidden="true"></i>
+  </button>
+</div>
+<span id="fps"></span>
+<!-- 播放器 / Live2D / 鼠标烟花 / 图片放大 等装饰功能改由 assets/js/settings.js
+     按访客在 /set 页的开关（localStorage）动态注入，关闭的功能零网络开销。 -->

@@ -1,0 +1,135 @@
+.post-submit {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  margin: 20px 0 24px;
+}
+
+.post-submit__head {
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--border-color);
+
+  h2 {
+    margin: 0;
+    font-size: 1.15rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  p {
+    margin: 8px 0 0;
+    color: var(--text-color);
+    opacity: 0.75;
+    font-size: 0.92rem;
+  }
+}
+
+// 控件外观（label / input / textarea / focus）改由 Basecoat .form 作用域提供，
+// 这里只保留表单布局。按钮用 Basecoat btn 类（见 post.html）。
+.post-submit__form {
+  display: grid;
+  gap: 10px;
+
+  .post-submit__grid {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.post-submit__resource-header {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  label {
+    margin: 0;
+  }
+}
+
+.post-submit__resource-list {
+  display: grid;
+  gap: 8px;
+}
+
+.post-submit__resource-item {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1.5fr 0.8fr auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.post-submit__hint {
+  margin: 2px 0 0;
+  font-size: 0.88rem;
+  color: var(--text-color);
+  opacity: 0.75;
+}
+
+.post-submit__actions {
+  margin-top: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+// .post-submit__button 外观用 Basecoat btn（见 post.html）；仅保留移动端整宽（下方媒体查询）。
+.post-submit__fallback {
+  font-size: 0.92rem;
+}
+
+.post-submit__tip {
+  min-height: 1.4em;
+  margin: 10px 0 0;
+  font-size: 0.92rem;
+  color: var(--text-color);
+  opacity: 0.75;
+
+  &.is-error {
+    color: #c62828;
+  }
+
+  &.is-success {
+    color: #2e7d32;
+  }
+}
+
+@media (max-width: 768px) {
+  .post-submit {
+    padding: 16px;
+  }
+
+  .post-submit__actions {
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .post-submit__resource-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .post-submit__resource-item {
+    grid-template-columns: 1fr;
+  }
+
+  .post-submit__form {
+    .post-submit__grid {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+  }
+
+  .post-submit__button {
+    width: 100%;
+    justify-content: center;
+  }
+}

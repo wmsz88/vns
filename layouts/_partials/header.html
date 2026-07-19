@@ -1,0 +1,26 @@
+{{/* 顶栏：桌面横向导航 + 即时搜索框；移动端只留 logo + 搜索图标 + 汉堡，
+     菜单与信息卡由独立的 .hdr-drawer（见 drawer.html）承载。 */}}
+<div class="hdr-inner">
+  <a class="hdr-logo" href="{{ .Site.BaseURL }}" aria-label="{{ .Site.Title }}">
+    <img src="{{ .Site.Params.logo }}" alt="" width="30" height="30" />
+    <b>{{ .Site.Title }}</b>
+  </a>
+
+  <nav class="hdr-nav" aria-label="主导航">
+    {{ partial "nav-links.html" (dict "page" . "variant" "bar") }}
+  </nav>
+
+  <div class="hdr-search" id="hdrSearch">
+    <i class="fa fa-magnifying-glass hdr-search-icon"></i>
+    <input type="search" id="hdrSearchInput" class="hdr-search-input" placeholder="搜索游戏…" autocomplete="off" aria-label="站内搜索" role="combobox" aria-expanded="false" aria-controls="hdrSearchPanel" aria-autocomplete="list" />
+    {{ range .Site.Menus.main }}{{ if eq .Identifier "img-search" }}
+    <a class="hdr-search-alt" href="{{ .URL }}" title="{{ .Name }}"><i class="{{ .Pre }}"></i></a>{{ end }}{{ end }}
+    {{ range .Site.Menus.main }}{{ if eq .Identifier "multi-search" }}
+    <a class="hdr-search-alt" href="{{ .URL }}" target="_blank" rel="noopener noreferrer" title="{{ .Name }}"><i class="{{ .Pre }}"></i></a>{{ end }}{{ end }}
+    <div class="hdr-search-panel" id="hdrSearchPanel" hidden role="listbox" aria-label="搜索结果"></div>
+  </div>
+
+  {{/* 移动端顶栏专用：搜索图标（跳完整搜索页）+ 汉堡（开右侧栏 .hdr-drawer）。桌面隐藏。 */}}
+  <a class="hdr-msearch" href="{{ "/search/" | relURL }}" aria-label="搜索"><i class="fa fa-magnifying-glass"></i></a>
+  <button type="button" id="menuToggle" class="hdr-burger" data-target="#hdrDrawer" aria-label="打开菜单" aria-expanded="false"><i class="fa fa-bars"></i></button>
+</div>

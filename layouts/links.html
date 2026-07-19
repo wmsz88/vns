@@ -1,0 +1,60 @@
+{{ define "main" }}
+<article class="article-main">
+  {{ partial "h1.html" . }} {{ .Content }}
+
+  {{ with hugo.Data.blogroll }}
+  <div class="links-section">
+    <h2><i class="fa fa-compass"></i> 推荐链接</h2>
+    <ul class="blogroll-list">
+      {{ range . }}
+      <li class="blogroll-item">
+        <a href="{{ .url }}" target="_blank" rel="noopener external nofollow noreferrer">{{ .name }}</a>
+      </li>
+      {{ end }}
+    </ul>
+  </div>
+  {{ end }}
+
+  {{ with hugo.Data.recommended }}
+  <div class="links-section">
+    <h2><i class="fa fa-star"></i> 推荐站点</h2>
+    <div class="links-grid">
+      {{ $defaultsite := $.Site.Params.ogImage | absURL }}
+      {{ range . }}
+      <a class="link-card" href="{{ .url }}" target="_blank" rel="noopener external nofollow noreferrer">
+        {{ if .logo }}
+        <img src="{{ .logo | absURL }}" alt="{{ .site }}" loading="lazy" />
+        {{ else }}
+        <img src="{{ $defaultsite }}" alt="{{ .site }}" loading="lazy" />
+        {{ end }}
+        <div class="link-info">
+          <strong>{{ .site }}</strong>
+          {{ with .desc }}<span>{{ . }}</span>{{ end }}
+        </div>
+      </a>
+      {{ end }}
+    </div>
+  </div>
+  {{ end }}
+
+  <div class="links-section">
+    <h2><i class="fa fa-link"></i> 友情链接</h2>
+    <div class="links-grid">
+      {{ $defaultsite := .Site.Params.ogImage | absURL }}
+      {{ range hugo.Data.links }}
+      <a class="link-card" {{ if .url }}href="{{ .url }}" target="_blank" rel="noopener external nofollow noreferrer"{{ end }}>
+        {{ if .logo }}
+        <img src="{{ .logo | absURL }}" alt="{{ .site }}" loading="lazy" />
+        {{ else }}
+        <img src="{{ $defaultsite }}" alt="{{ .site }}" loading="lazy" />
+        {{ end }}
+        <div class="link-info">
+          <strong>{{ .site | default "null" }}</strong>
+          {{ with .desc }}<span>{{ . }}</span>{{ end }}
+        </div>
+      </a>
+      {{ end }}
+    </div>
+  </div>
+</article>
+{{ end }}

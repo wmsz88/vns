@@ -1,0 +1,282 @@
+{{ define "main" }}
+{{ $articles := where .Site.RegularPages "Type" "p" }}
+<article class="article-main">
+  <aside class="home-statusbar" aria-label="站点状态">
+    <a class="statusbar-item statusbar-link" href="/latest/" title="去看全部资源">
+      <i class="fa fa-database"></i>
+      <strong class="stat-num">{{ len $articles }}</strong>&nbsp;部资源
+    </a>
+    <a class="statusbar-item statusbar-link" href="/tags/" title="标签云">
+      <i class="fa fa-tags"></i>
+      <strong class="stat-num">{{ len .Site.Taxonomies.tags }}</strong>&nbsp;标签
+    </a>
+    <a class="statusbar-item statusbar-link" href="/tags/#years" title="按年份浏览">
+      <i class="fa fa-clock"></i>
+      <strong class="stat-num">{{ len .Site.Taxonomies.years }}</strong>&nbsp;年代
+    </a>
+    {{ with index $articles 0 }}
+    <span class="statusbar-item statusbar-update">
+      <i class="fa fa-arrow-up"></i>
+      最近&nbsp;<a href="{{ .RelPermalink }}">{{ .Lastmod.Format "01/02" }}</a>
+    </span>
+    {{ end }}
+    <span class="statusbar-item statusbar-pv">
+      <i class="fa fa-eye"></i>
+      <span data-busuanzi-mirror="busuanzi_value_site_pv">…</span>&nbsp;PV
+    </span>
+    <span class="statusbar-item statusbar-uv">
+      <i class="fa fa-user"></i>
+      <span data-busuanzi-mirror="busuanzi_value_site_uv">…</span>&nbsp;UV
+    </span>
+  </aside>
+
+  <div class="home-top">
+    <section class="home-hero">
+      <div class="image-zoom">
+        <img data-src="https://api.illlights.com/v1/img" alt="Random Image" src="https://api.illlights.com/v1/img"
+          data-zoomable />
+      </div>
+      <h1>
+        <i class="fas fa-hashtag"></i>&nbsp;{{ .Title }}<sup id="busuanzi_value_page_pv"></sup>
+        <a class="post-edit-link" href="{{ .Site.Params.contentEdit }}{{ with .File }}{{ .Path }}{{ end }}"
+          rel="external nofollow noreferrer" title="编辑" target="_blank"><i class="fas fa-pencil-alt"></i></a>
+      </h1>
+    </section>
+
+    <nav class="home-quicklinks" aria-label="快捷入口">
+      <a class="quicklink" href="#" data-random-link data-no-swup aria-label="随机跳转">
+        <i class="fas fa-shuffle"></i>
+        <span class="quicklink-title">随机</span>
+        <span class="quicklink-desc">随便看看，惊喜由命运决定</span>
+      </a>
+      <a class="quicklink" href="/tags/">
+        <i class="fas fa-tags"></i>
+        <span class="quicklink-title">标签</span>
+        <span class="quicklink-desc">海量标签等你探索</span>
+      </a>
+      <a class="quicklink" href="/latest/">
+        <i class="fas fa-clock"></i>
+        <span class="quicklink-title">最新</span>
+        <span class="quicklink-desc">按时间倒序浏览所有资源</span>
+      </a>
+    </nav>
+  </div>
+
+  <section class="home-announce">
+    {{ .Content }}
+  </section>
+
+  <section class="home-playlist" aria-label="今日 Play">
+    <div class="home-section-head">
+      <h2><i class="fa fa-gamepad"></i>&nbsp;今日 Play&nbsp;·&nbsp;<span data-playlist-date>--.--.--</span></h2>
+      <button class="home-reroll" data-playlist-reroll type="button" title="预览明天">
+        <i class="fa fa-forward"></i>&nbsp;明日预览
+      </button>
+    </div>
+    <div class="home-playlist-row" data-playlist-target>
+      {{ range seq 6 }}<div class="playlist-skel"></div>{{ end }}
+    </div>
+    <div class="home-playlist-foot">
+      <button class="playlist-share" data-playlist-share type="button" title="复制分享链接">
+        <i class="fa fa-link"></i>&nbsp;复制今日清单链接
+      </button>
+    </div>
+  </section>
+
+  {{ $featured := first 3 (shuffle $articles) }}
+  {{ if $featured }}
+  <section class="home-featured" aria-label="今日邀引">
+    <div class="home-section-head">
+      <h2><i class="fa fa-dice"></i>&nbsp;今日邀引</h2>
+      <button class="home-reroll" data-reroll-pool="featured" type="button" title="再抽 3 部">
+        <i class="fa fa-rotate"></i>&nbsp;换一批
+      </button>
+    </div>
+    <div class="home-featured-grid" data-reroll-target="featured">
+      {{ range $featured }}
+      {{ $cover := .Params.cover }}
+      {{ if not $cover }}
+        {{ with findRESubmatch `!\[[^\]]*\]\(([^)]+)\)` .RawContent 1 }}
+          {{ $cover = index (index . 0) 1 }}
+        {{ end }}
+      {{ end }}
+      <a class="featured-card" href="{{ .RelPermalink }}">
+        {{ if $cover }}<img class="featured-cover" data-src="{{ $cover }}" alt="{{ .LinkTitle }}" loading="lazy" />{{ end }}
+        <span class="featured-title"><span>{{ .LinkTitle }}</span></span>
+        {{ with .Params.tags }}
+        <span class="card-tags">{{ range first 3 . }}<span class="card-tag">{{ . }}</span>{{ end }}</span>
+        {{ end }}
+      </a>
+      {{ end }}
+    </div>
+    {{/* 候选池：客户端 reroll 用 */}}
+    {{ $items := slice }}
+    {{ range $p := first 30 (shuffle $articles) }}
+      {{ $c := $p.Params.cover }}
+      {{ if not $c }}
+        {{ with findRESubmatch `!\[[^\]]*\]\(([^)]+)\)` $p.RawContent 1 }}
+          {{ $c = index (index . 0) 1 }}
+        {{ end }}
+      {{ end }}
+      {{ $items = $items | append (dict "u" $p.RelPermalink "t" $p.LinkTitle "c" $c) }}
+    {{ end }}
+    <script type="application/json" data-home-pool>{{ $items | jsonify | safeJS }}</script>
+  </section>
+  {{ end }}
+
+  {{/* 今日话题：从前 30 热门 tag 里随机抽 1 个，展示该 tag 下作品 */}}
+  {{ $topTags := first 30 .Site.Taxonomies.tags.ByCount }}
+  {{ $spotlight := index (shuffle $topTags) 0 }}
+  {{ with $spotlight }}
+  {{ $spotlightPages := first 8 .Pages.ByLastmod.Reverse }}
+  <section class="home-spotlight" aria-label="今日话题">
+    <div class="home-section-head">
+      <h2 data-spotlight-head>
+        <i class="fa fa-fire"></i>&nbsp;今日话题：
+        <a class="spotlight-tag" href="{{ .Page.Permalink }}" data-spotlight-tag>{{ .Page.Title }}</a>
+        <span class="spotlight-count" data-spotlight-count>{{ .Count }} 部作品</span>
+      </h2>
+      <button class="home-reroll" data-spotlight-reroll type="button" title="换个话题">
+        <i class="fa fa-rotate"></i>&nbsp;换个话题
+      </button>
+    </div>
+    <div class="home-spotlight-row" data-spotlight-target>
+      {{ range $spotlightPages }}
+      {{ $cover := .Params.cover }}
+      {{ if not $cover }}
+        {{ with findRESubmatch `!\[[^\]]*\]\(([^)]+)\)` .RawContent 1 }}
+          {{ $cover = index (index . 0) 1 }}
+        {{ end }}
+      {{ end }}
+      <a class="spotlight-card" href="{{ .RelPermalink }}" title="{{ .LinkTitle }}">
+        {{ if $cover }}<img class="spotlight-cover" data-src="{{ $cover }}" alt="{{ .LinkTitle }}" loading="lazy" />{{ end }}
+        <span class="spotlight-title"><span>{{ .LinkTitle }}</span></span>
+        {{ with .Params.tags }}
+        <span class="card-tags">{{ range first 3 . }}<span class="card-tag">{{ . }}</span>{{ end }}</span>
+        {{ end }}
+      </a>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  {{ $recent := first 6 $articles.ByLastmod.Reverse }}
+  {{ if $recent }}
+  <section class="home-recent" aria-label="近期更新">
+    <div class="home-section-head">
+      <h2><i class="fa fa-clock"></i>&nbsp;近期更新</h2>
+      <a href="/latest/" class="home-section-more">查看全部 →</a>
+    </div>
+    <div class="recent-chips" data-recent-chips>
+      <button class="recent-chip is-active" data-filter="" type="button">全部</button>
+      <button class="recent-chip" data-filter="y:2024" type="button">2024</button>
+      <button class="recent-chip" data-filter="y:2023" type="button">2023</button>
+      <button class="recent-chip" data-filter="k:Windows" type="button">Windows</button>
+      <button class="recent-chip" data-filter="k:Android" type="button">Android</button>
+    </div>
+    <div class="home-recent-row" data-recent-target>
+      {{ range $recent }}
+      {{ $cover := .Params.cover }}
+      {{ if not $cover }}
+        {{ with findRESubmatch `!\[[^\]]*\]\(([^)]+)\)` .RawContent 1 }}
+          {{ $cover = index (index . 0) 1 }}
+        {{ end }}
+      {{ end }}
+      <a class="recent-card" href="{{ .RelPermalink }}" title="{{ .LinkTitle }}">
+        {{ if $cover }}<img class="recent-cover" data-src="{{ $cover }}" alt="{{ .LinkTitle }}" loading="lazy" />{{ end }}
+        <span class="recent-title"><span>{{ .LinkTitle }}</span></span>
+        {{ with .Params.tags }}
+        <span class="card-tags">{{ range first 3 . }}<span class="card-tag">{{ . }}</span>{{ end }}</span>
+        {{ end }}
+      </a>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  {{/* 全文章数据池：供 今日 Play / 近期筛选 共用 */}}
+  {{ $fullPool := slice }}
+  {{ range $p := $articles }}
+    {{ $c := $p.Params.cover }}
+    {{ if not $c }}
+      {{ with findRESubmatch `!\[[^\]]*\]\(([^)]+)\)` $p.RawContent 1 }}
+        {{ $c = index (index . 0) 1 }}
+      {{ end }}
+    {{ end }}
+    {{ $fullPool = $fullPool | append (dict
+      "u" $p.RelPermalink
+      "t" $p.LinkTitle
+      "c" $c
+      "y" ($p.Params.years | default slice)
+      "k" ($p.Params.categories | default slice)
+      "m" $p.Lastmod.Unix
+    ) }}
+  {{ end }}
+  <script type="application/json" data-home-full-pool>{{ $fullPool | jsonify | safeJS }}</script>
+
+  {{/* 热门标签池：供 换个话题 用 */}}
+  {{ $tagPool := slice }}
+  {{ range $tag := first 30 .Site.Taxonomies.tags.ByCount }}
+    {{ $picks := slice }}
+    {{ range first 8 $tag.Pages.ByLastmod.Reverse }}
+      {{ $c := .Params.cover }}
+      {{ if not $c }}
+        {{ with findRESubmatch `!\[[^\]]*\]\(([^)]+)\)` .RawContent 1 }}
+          {{ $c = index (index . 0) 1 }}
+        {{ end }}
+      {{ end }}
+      {{ $tg := .Params.tags | default slice }}
+      {{ $picks = $picks | append (dict
+        "u" .RelPermalink
+        "t" .LinkTitle
+        "c" $c
+        "g" (first 3 $tg)
+      ) }}
+    {{ end }}
+    {{ $tagPool = $tagPool | append (dict
+      "n" $tag.Page.Title
+      "u" $tag.Page.Permalink
+      "c" $tag.Count
+      "p" $picks
+    ) }}
+  {{ end }}
+  <script type="application/json" data-home-tag-pool>{{ $tagPool | jsonify | safeJS }}</script>
+
+  {{ $popularTags := first 40 .Site.Taxonomies.tags.ByCount }}
+  {{ if $popularTags }}
+  {{ $maxCount := (index $popularTags 0).Count }}
+  <section class="home-tagcloud" aria-label="热门标签">
+    <div class="home-section-head">
+      <h2><i class="fa fa-tags"></i>&nbsp;热门标签</h2>
+      <a href="/tags/" class="home-section-more">全部标签 →</a>
+    </div>
+    <div class="tagcloud">
+      {{ range $i, $tag := $popularTags }}
+      {{ $ratio := div (float $tag.Count) (float $maxCount) }}
+      {{ $size := add 0.78 (mul $ratio 0.72) }}
+      <span class="tagcloud-tag-wrap"{{ if lt $i 10 }} data-popover-below{{ end }}>
+        <a href="{{ $tag.Page.Permalink }}" class="tagcloud-tag" style="font-size:{{ printf "%.2f" $size }}rem; opacity:{{ printf "%.2f" (add 0.55 (mul $ratio 0.45)) }};">{{ $tag.Page.Title }}<small>{{ $tag.Count }}</small></a>
+        <div class="tagcloud-popover" role="tooltip">
+          <div class="tagcloud-popover-grid">
+            {{ range first 4 $tag.Pages.ByLastmod.Reverse }}
+            {{ $c := .Params.cover }}
+            {{ if not $c }}
+              {{ with findRESubmatch `!\[[^\]]*\]\(([^)]+)\)` .RawContent 1 }}
+                {{ $c = index (index . 0) 1 }}
+              {{ end }}
+            {{ end }}
+            <a href="{{ .RelPermalink }}" class="tagcloud-popover-card" title="{{ .LinkTitle }}">
+              {{ if $c }}<img data-src="{{ $c }}" src="{{ $c }}" alt="{{ .LinkTitle }}" loading="lazy" />{{ end }}
+              <span>{{ .LinkTitle }}</span>
+            </a>
+            {{ end }}
+          </div>
+          <a class="tagcloud-popover-foot" href="{{ $tag.Page.Permalink }}">共 {{ $tag.Count }} 部 →</a>
+        </div>
+      </span>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+</article>
+{{ end }}

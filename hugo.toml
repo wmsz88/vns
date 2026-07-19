@@ -1,0 +1,270 @@
+baseURL = 'https://gal.saop.cc/'
+defaultContentLanguage = "zh"
+defaultContentLanguageInSubdir = false
+title = 'VNS'
+timezone = "Asia/Shanghai"
+enableRobotsTXT = true
+
+contentDir = "content"
+label = "简体中文"
+direction = "ltr"
+locale = "zh"
+hasCJKLanguage = true
+weight = 1
+
+[[menus.main]]
+identifier = "guide"
+name = '演示'
+pageRef = '/guide'
+weight = -1
+pre = "fa fa-film"
+
+[[menus.main]]
+identifier = "multi-search"
+name = '聚搜'
+url = 'https://www.searchgal.top/'
+weight = 1
+pre = "fa fa-hexagon-nodes"
+
+[[menus.main]]
+identifier = "random"
+name = '随机'
+weight = 2
+pre = "fa fa-shuffle"
+
+[[menus.main]]
+identifier = "latest"
+name = '最新'
+pageRef = '/latest'
+weight = 2.5
+pre = "fa fa-clock"
+
+[[menus.main]]
+identifier = "home"
+name = '首页'
+pageRef = '/'
+weight = 3
+pre = "fa fa-house"
+
+[[menus.main]]
+identifier = "search"
+name = '搜索'
+pageRef = '/search'
+weight = 4
+pre = "fa fa-search"
+
+[[menus.main]]
+identifier = "img-search"
+name = '识图'
+pageRef = '/img-search'
+weight = 4.5
+pre = "fa fa-image"
+
+[[menus.main]]
+identifier = "tags"
+name = '标签'
+pageRef = '/tags'
+weight = 6
+pre = "fa fa-tags"
+
+[[menus.footer]]
+identifier = "about"
+name = '关于'
+pageRef = '/about'
+weight = 7
+pre = "fa fa-circle-info"
+
+[[menus.main]]
+identifier = "docs"
+name = '文档'
+pageRef = '/docs'
+weight = 8
+pre = "fa fa-file-lines"
+
+[[menus.main]]
+identifier = "comments"
+name = '留言'
+pageRef = '/comments'
+weight = 9
+pre = "fa fa-comment-dots"
+
+[[menus.main]]
+identifier = "dls"
+name = '下载'
+pageRef = '/dls'
+weight = 10
+pre = "fa fa-download"
+
+[[menus.main]]
+identifier = "rank"
+name = '排行'
+pageRef = '/rank'
+weight = 11
+pre = "fa fa-ranking-star"
+
+[[menus.main]]
+identifier = "set"
+name = '设置'
+pageRef = '/set'
+weight = 11.5
+pre = "fa fa-gear"
+
+[[menus.footer]]
+identifier = "teams"
+name = '团队'
+pageRef = '/teams'
+weight = 12
+pre = "fa fa-people-group"
+
+[[menus.footer]]
+identifier = "cloud"
+name = '云盘'
+url = 'https://cloud.saop.cc/'
+weight = 13
+pre = "fa fa-cloud"
+
+[[menus.footer]]
+identifier = "drive"
+name = '网盘'
+url = 'https://drive.saop.cc/'
+weight = 14
+pre = "fa fa-hard-drive"
+
+[[menus.main]]
+identifier = "live"
+name = '云游'
+pageRef = '/live'
+weight = 15
+pre = "fa fa-gamepad"
+
+[[menus.main]]
+identifier = "post"
+name = '投稿'
+pageRef = '/post'
+weight = 16
+pre = "fa fa-pen"
+
+[[menus.footer]]
+identifier = "donate"
+name = '捐赠'
+pageRef = '/donate'
+weight = 17
+pre = "fa fa-hand-holding-dollar"
+
+[[menus.footer]]
+identifier = "links"
+name = '友链'
+pageRef = '/links'
+weight = 18
+pre = "fa fa-link"
+
+[[menus.footer]]
+identifier = "feedback"
+name = '问卷'
+pageRef = '/feedback'
+weight = 19
+pre = "fa fa-file-lines"
+
+[[menus.footer]]
+identifier = "ads"
+name = '广告'
+pageRef = '/ads'
+weight = 20
+pre = "fa fa-rectangle-ad"
+
+[[menus.footer]]
+identifier = "old"
+name = '旧站'
+url = 'https://old.gal.saop.cc/'
+weight = 21
+pre = "fa fa-box-archive"
+
+[markup.goldmark.renderer]
+unsafe = true
+hardWraps = true
+[markup.goldmark.extensions.cjk]
+enable = true
+eastAsianLineBreaks = true
+escapedSpace = true
+[markup.tableOfContents]
+startLevel = 2
+endLevel = 4
+ordered = true
+
+[params]
+subtitle = 'Visual Novel'
+description = "VNS 是视觉小说（Visual Novel／Galgame）资源索引站，收录 Windows、Android、PSP 等多平台作品的简介、汉化与下载分流，提供站内搜索、标签与平台分类、识图及全网聚合搜索。"
+summaryLength = 100
+date_format = "1970年01月01日"
+mainSections = ["p"]
+defaultAuthor = "Asuna"
+ogImage = "img/logo.svg"
+logo = "/img/logo.svg"
+contentEdit = "https://github.com/AdingApkgg/vns/edit/dev/content/"
+bszAPI = "https://bsz.saop.cc/api"
+
+[pagination]
+pagerSize = 10
+path = "page"
+
+[permalinks]
+categories = "/platforms/:title/"
+tags = "/tags/:title/"
+years = "/year/:title/"
+
+[taxonomies]
+category = "categories"
+tag = "tags"
+year = "years"
+
+[params.postmeta]
+enabled = true
+
+[params.comments]
+enabled = true
+provider = "valine"
+
+[mediaTypes]
+[mediaTypes."text/llms"]
+suffixes = ["txt"]
+[mediaTypes."text/javascript"]
+suffixes = ["js"]
+
+[outputFormats.LLMS]
+mediaType = "text/llms"
+baseName = "llms"
+isPlainText = true
+permalinkable = false
+
+[outputFormats.SW]
+mediaType = "text/javascript"
+baseName = "sw"
+isPlainText = true
+permalinkable = false
+
+[outputs]
+home = ["HTML", "RSS", "JSON", "LLMS", "SW"]
+
+# --- Tailwind CSS v4 integration (css.TailwindCSS) ---
+# buildStats writes hugo_stats.json listing every class emitted in templates;
+# Tailwind scans it (via @source in assets/css/app.css) to generate utilities.
+[build]
+  [build.buildStats]
+    enable = true
+  [[build.cachebusters]]
+    source = 'assets/notwatching/hugo_stats\.json'
+    target = 'css'
+  [[build.cachebusters]]
+    source = '(postcss|tailwind)\.config\.js'
+    target = 'css'
+
+# Declaring mounts overrides ONLY the default 'assets' mount, so we re-add it
+# explicitly and mount the root hugo_stats.json into the assets filesystem.
+[module]
+  [[module.mounts]]
+    source = 'assets'
+    target = 'assets'
+  [[module.mounts]]
+    disableWatch = true
+    source = 'hugo_stats.json'
+    target = 'assets/notwatching/hugo_stats.json'
