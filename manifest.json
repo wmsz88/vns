@@ -1,9 +1,9 @@
 {
     "dir": "ltr",
-    "name": "Visual Novel Site",
-    "description": "LINK START!",
+    "name": "Galgame 馆",
+    "description": "Visual Novel / Galgame 资源索引站",
     "display": "standalone",
-    "short_name": "VNS",
+    "short_name": "Gal馆",
     "scope": "/",
     "start_url": "/",
     "background_color": "#f8f9fa",

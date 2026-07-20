@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>VNS</title><link>https://gal.saop.cc/</link><description>VNS 是视觉小说（Visual Novel／Galgame）资源索引站，收录 Windows、Android、PSP 等多平台作品的简介、汉化与下载分流，提供站内搜索、标签与平台分类、识图及全网聚合搜索。</description><atom:link href="https://gal.saop.cc/tags/%E5%8A%A8%E4%BD%9C/" rel="self" type="application/rss+xml"/><item><title>Angel Beats! -1st beat-／天使的脉动／天使的心跳／围殴天使／神仙打架／仙人跳／Angel Beast／エンジェルビーツ!／AB!</title><link>https://gal.saop.cc/p/6688/</link><pubDate>Mon, 06 May 2024 23:46:00 +0800</pubDate><guid>https://gal.saop.cc/p/6688/</guid><description>&lt;h2 id="图片"&gt;图片&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Galgame 馆</title><link>http://localhost:1313/</link><description>Galgame 馆是视觉小说（Visual Novel／Galgame）资源索引站，收录 Windows、Android、PSP 等多平台作品的简介与汉化资源。</description><atom:link href="http://localhost:1313/tags/%E5%8A%A8%E4%BD%9C/" rel="self" type="application/rss+xml"/><item><title>Angel Beats! -1st beat-／天使的脉动／天使的心跳／围殴天使／神仙打架／仙人跳／Angel Beast／エンジェルビーツ!／AB!</title><link>http://localhost:1313/p/6688/</link><pubDate>Mon, 06 May 2024 23:46:00 +0800</pubDate><guid>http://localhost:1313/p/6688/</guid><description>&lt;h2 id="图片"&gt;图片&lt;/h2&gt;
 &lt;p&gt;&lt;figure class="image-zoom" itemscope itemtype="http://schema.org/ImageObject"&gt;
 &lt;img
 data-src="https://static.30hb.cn/vndb/img/angelbeats_p1.webp"
@@ -36,7 +36,7 @@ itemprop="contentUrl"
 &lt;/ul&gt;
 &lt;h2 id="提示"&gt;提示&lt;/h2&gt;
 &lt;blockquote&gt;
-&lt;p&gt;基本帮助请参阅公告：&lt;a href="https://gal.saop.cc/" &gt;点我跳转&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;基本帮助请参阅公告：&lt;a href="http://localhost:1313/" &gt;点我跳转&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id="分流"&gt;分流&lt;/h2&gt;
 &lt;ol&gt;
