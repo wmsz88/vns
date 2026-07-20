@@ -10,10 +10,12 @@ function initArtalk() {
   }
 
   el.innerHTML = "";
+  // TODO: 评论系统需要自行部署 Artalk 后端
+  // 参考文档：https://artalk.js.org/
   artalkInstance = Artalk.init({
     el: "#artalk-comments",
-    server: "https://artalk.saop.cc",
-    site: "VNS",
+    server: "", // 你的 Artalk 服务地址
+    site: "Galgame馆",
     darkMode: 'auto',
   });
 }

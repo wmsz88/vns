@@ -1,7 +1,7 @@
-baseURL = 'https://gal.saop.cc/'
+baseURL = 'http://localhost:1313/'
 defaultContentLanguage = "zh"
 defaultContentLanguageInSubdir = false
-title = 'VNS'
+title = 'Galgame 馆'
 timezone = "Asia/Shanghai"
 enableRobotsTXT = true
 
@@ -19,12 +19,12 @@ pageRef = '/guide'
 weight = -1
 pre = "fa fa-film"
 
-[[menus.main]]
-identifier = "multi-search"
-name = '聚搜'
-url = 'https://www.searchgal.top/'
-weight = 1
-pre = "fa fa-hexagon-nodes"
+# [[menus.main]]
+# identifier = "multi-search"
+# name = '聚搜'
+# url = 'https://www.searchgal.top/'
+# weight = 1
+# pre = "fa fa-hexagon-nodes"
 
 [[menus.main]]
 identifier = "random"
@@ -116,19 +116,19 @@ pageRef = '/teams'
 weight = 12
 pre = "fa fa-people-group"
 
-[[menus.footer]]
-identifier = "cloud"
-name = '云盘'
-url = 'https://cloud.saop.cc/'
-weight = 13
-pre = "fa fa-cloud"
+# [[menus.footer]]
+# identifier = "cloud"
+# name = '云盘'
+# url = 'https://cloud.saop.cc/'
+# weight = 13
+# pre = "fa fa-cloud"
 
-[[menus.footer]]
-identifier = "drive"
-name = '网盘'
-url = 'https://drive.saop.cc/'
-weight = 14
-pre = "fa fa-hard-drive"
+# [[menus.footer]]
+# identifier = "drive"
+# name = '网盘'
+# url = 'https://drive.saop.cc/'
+# weight = 14
+# pre = "fa fa-hard-drive"
 
 [[menus.main]]
 identifier = "live"
@@ -172,12 +172,12 @@ pageRef = '/ads'
 weight = 20
 pre = "fa fa-rectangle-ad"
 
-[[menus.footer]]
-identifier = "old"
-name = '旧站'
-url = 'https://old.gal.saop.cc/'
-weight = 21
-pre = "fa fa-box-archive"
+# [[menus.footer]]
+# identifier = "old"
+# name = '旧站'
+# url = 'https://old.gal.saop.cc/'
+# weight = 21
+# pre = "fa fa-box-archive"
 
 [markup.goldmark.renderer]
 unsafe = true
@@ -192,16 +192,16 @@ endLevel = 4
 ordered = true
 
 [params]
-subtitle = 'Visual Novel'
-description = "VNS 是视觉小说（Visual Novel／Galgame）资源索引站，收录 Windows、Android、PSP 等多平台作品的简介、汉化与下载分流，提供站内搜索、标签与平台分类、识图及全网聚合搜索。"
+subtitle = 'Galgame 资源站'
+description = "Galgame 馆是视觉小说（Visual Novel／Galgame）资源索引站，收录 Windows、Android、PSP 等多平台作品的简介与汉化资源。"
 summaryLength = 100
 date_format = "1970年01月01日"
 mainSections = ["p"]
-defaultAuthor = "Asuna"
+defaultAuthor = "Admin"
 ogImage = "img/logo.svg"
 logo = "/img/logo.svg"
-contentEdit = "https://github.com/AdingApkgg/vns/edit/dev/content/"
-bszAPI = "https://bsz.saop.cc/api"
+contentEdit = "https://github.com/your-username/your-repo/edit/main/content/"
+bszAPI = ""
 
 [pagination]
 pagerSize = 10

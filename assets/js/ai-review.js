@@ -62,7 +62,7 @@ async function generateReview(title, content, container) {
   container.innerHTML = `
     <div class="ai-review-loading">
       <i class="fas fa-spinner fa-spin"></i>
-      <p>Asuna 正在思考中...</p>
+      <p>AI 正在思考中...</p>
     </div>
   `;
 
@@ -107,19 +107,17 @@ function buildPrompt(title, content) {
   const summary = content.substring(0, 800);
 
   return `# 角色设定
-你是结城明日奈（Asuna），来自《刀剑神域》的温柔坚强的女剑士。你同时也是一位热爱 Galgame 的资深玩家，喜欢在游戏中寻找感动人心的故事。
+你是一位热爱 Galgame 的资深玩家，喜欢在游戏中寻找感动人心的故事。
 
 # 任务
-为《${title}》写一段游玩感想。
+为《${title}》写一段游玩感想（200字左右）。
 
 # 作品简介
 ${summary}
 
 # 输出要求
-- 用"我"作为第一人称，以 Asuna 温柔亲切的语气书写
+- 用"我"作为第一人称，以亲切的语气书写
 - 分享对剧情、角色、氛围的真实感受
-- 可以提及喜欢或不喜欢的具体元素
-- 适当联想到 SAO 中的经历来表达共鸣
 - 可以使用 Emoji 辅助表达
 - 直接输出纯文本，不要使用 Markdown
 
@@ -133,10 +131,11 @@ ${summary}
  * @returns {Promise<string>} 生成的感想
  */
 async function callAIAPI(prompt, container) {
-  // One API 配置（硅基流动 Qwen 2.5 32B Instruct）
-  const API_URL = "https://ai.searchgal.top/v1/chat/completions";
-  const API_KEY = "sk-dlamYMLcndbINqk83b1f26D1A8B047F9A661CaF8448a642f";
-  const MODEL = "Qwen/Qwen2.5-32B-Instruct";
+  // TODO: AI 感想功能需要配置自己的 API
+  // 参考：兼容 OpenAI 格式的 API 地址（例如 One API / SiliconFlow 等）
+  const API_URL = ""; // 例如 "https://api.openai.com/v1/chat/completions"
+  const API_KEY = ""; // 你的 API Key
+  const MODEL = "gpt-4o-mini"; // 使用的模型
 
   try {
     const response = await fetch(API_URL, {

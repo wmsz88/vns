@@ -218,7 +218,8 @@ export function initPostSubmissionForm() {
     const subject = `资源投稿《${title}》`;
     const body = bodyLines.join("\n");
 
-    const mailto = `mailto:i@saop.cc?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    // TODO: 将邮箱地址改为你自己的
+    const mailto = `mailto:admin@example.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setTip("正在拉起邮箱客户端...", "is-success");
     window.location.href = mailto;
   });
@@ -229,10 +230,12 @@ export function initPostSubmissionForm() {
 /**
  * Valine 评论系统配置
  */
+// TODO: Valine 评论需要自行配置 LeanCloud
+// 参考：https://valine.js.org/quickstart.html
 const VALINE_CONFIG = {
-  appId: "BnlZFCN5ghutLVVEX0el3pz3-MdYXbMMI",
-  appKey: "OvpvXLKwajI2qYE4XsNMokpW",
-  serverURLs: "https://valine.saop.cc",
+  appId: "",
+  appKey: "",
+  serverURLs: "",
   placeholder:
     "昵称栏输入 QQ 号即可获取头像与邮箱..\n评论支持标准的 Markdown 全语法~",
   avatar_cdn: "https://weavatar.com/avatar/",
@@ -501,7 +504,9 @@ export function initRankPage() {
       '<div class="loading"><i class="fas fa-spinner fa-spin"></i> 加载中...</div>';
 
     const target = `https://inarigal.com/api/ranking/${currentType}?days=${currentDays}`;
-    const apiUrl = `https://rp.saop.cc/?target=${encodeURIComponent(target)}`;
+    // TODO: 需要自己的 API 代理服务来获取外部排行数据
+    // 原站使用了代理 https://rp.saop.cc/，你需要自行部署或替换
+    const apiUrl = target; // 直接请求（可能有 CORS 问题）
 
     fetch(apiUrl)
       .then((response) => {

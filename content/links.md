@@ -1,20 +1,16 @@
 +++
 title = "友情链接"
-date = "2024-08-25 09:25:12"
-lastmod = "2025-11-04 01:30:00"
 comments = false
 layout = "links"
 +++
 
-如 [申请加入友链](https://github.com/AdingApkgg/vns/edit/dev/data/links.json) 请按如下格式提供
+友链申请请提供以下格式信息
 
 ```json
 {
-    "site": "VNS",
-    "desc": "Visual Novel",
-    "url": "https://gal.saop.cc",
-    "logo": "https://gal.saop.cc/img/logo.svg"
+    "site": "站点名称",
+    "desc": "站点简介",
+    "url": "https://你的域名",
+    "logo": "https://你的域名/logo.svg"
 }
 ```
-
-由这些站点为本站的索引赋能~
